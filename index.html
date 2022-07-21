@@ -16,11 +16,11 @@
         </div>
         <p class="mt-3">電話番号</p>
         <div>
-            <input class="form-control w-100 mt-1" name="udetate" required>
+            <input class="form-control w-100 mt-1" name="phone" required>
         </div>
         <p class="mt-3">お受け取り日時</p>
         <div>
-            <input type="datetime-local" class="form-control w-100 mt-1" name="fukkin" required>
+            <input type="datetime-local" class="form-control w-100 mt-1" name="text" required>
         </div>
         <input type="submit" class="mt-4 btn btn-primary" value="確認">
     </form>
@@ -64,13 +64,32 @@
         $(function () {
             $('form').submit(function () {
                 const name    = $('input[name="name"]').val();
-                const udetate = $('input[name="udetate"]').val();
-                const fukkin  = $('input[name="fukkin"]').val();
+                const udetate = $('input[name="phone"]').val();
+                const fukkin  = $('input[name="text"]').val();
                 const haikin  = $('input[name="haikin"]').val();
                 const sukuwat = $('input[name="sukuwat"]').val();
                 const msg = `${name}\n${udetate}\n${fukkin}\n${haikin}\n${sukuwat}`;
                 sendText(msg);
                 return false;
+            });
+        });
+        
+    //GASのAPIのURL（各自変更してください。）
+    const endpoint =
+        "https://script.google.com/macros/s/AKfycbzE3t4YpdSThluEysc6iuFEbwrsJhHmao_bF8q75SVqS2zfjgvcBxr1QGmeWoLrkte9Uw/exec";
+        
+        //APIを使って非同期データを取得する
+        fetch(endpoint)
+        .then(response => response.json())
+        /*成功した処理*/
+        .then(data => {
+            //JSONから配列に変換
+            const object = data;
+            //inputタグそれぞれに取得したデータを設定
+            $('input').each(function (index, element) {
+                if (object[0][$(element).attr('name')]) {
+                    $(element).val([object[0][$(element).attr('name')]]);
+                }
             });
         });
 
