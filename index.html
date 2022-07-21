@@ -73,26 +73,7 @@
                 return false;
             });
         });
-        
-    //GASのAPIのURL（各自変更してください。）
-    const endpoint =
-        "https://script.google.com/macros/s/AKfycbzE3t4YpdSThluEysc6iuFEbwrsJhHmao_bF8q75SVqS2zfjgvcBxr1QGmeWoLrkte9Uw/exec";
-        
-        //APIを使って非同期データを取得する
-        fetch(endpoint)
-        .then(response => response.json())
-        /*成功した処理*/
-        .then(data => {
-            //JSONから配列に変換
-            const object = data;
-            //inputタグそれぞれに取得したデータを設定
-            $('input').each(function (index, element) {
-                if (object[0][$(element).attr('name')]) {
-                    $(element).val([object[0][$(element).attr('name')]]);
-                }
-            });
-        });
-
+       
     </script>
 
 </body>
